@@ -2,6 +2,7 @@ const {app, BrowserWindow, globalShortcut, ipcMain}  = require('electron/main');
 const { stat } = require('node:fs');
 const path = require('node:path');
 const { PassThrough } = require('node:stream');
+const {handlePrompt} = require("./modules/handler")
 
 let win = null;
 let state = "null"
@@ -14,7 +15,7 @@ const createWindow = () => {
     win = new BrowserWindow({
         width: 500,
         height: 90,
-        // frame: false,
+        frame: false,
         showInTaskbar: false,
         webPreferences:{
             preload: path.join(__dirname,"preload.js"),
@@ -51,6 +52,7 @@ app.whenReady().then(() =>{
     })
     ipcMain.on("prompt", (event, data) =>{
         console.log("the prompt was ", data)
+        handlePrompt(data)
     })
     
 })
