@@ -1,8 +1,4 @@
 const {app, BrowserWindow, globalShortcut, ipcMain}  = require('electron/main');
-const { stat } = require('node:fs');
-const path = require('node:path');
-const { PassThrough } = require('node:stream');
-const {handlePrompt} = require("./modules/handler")
 
 let win = null;
 let settingWin = null;
@@ -42,35 +38,8 @@ const createWindow = () => {
 
 }
 
-app.whenReady().then(() =>{
-    createWindow()
-    win.hide()
-    globalShortcut.register("Control+Space", () => {
-        if(win) {
-            if (win.isVisible()){
-                win.hide()
-            }else{
-                win.show()
-            }
-        }
-     
-    })
-    globalShortcut.register("Escape", () => {
-        if(win) {
-            if (win.isVisible()){
-                win.hide()
-            }
-        }
-    })
-    ipcMain.on("prompt", (event, data) =>{
-        handlePrompt(data)
-        win.hide()
-    })
-    
-})
 
-
-
-app.on("window-all-closed",()=>{
-    app.quit()
-})
+module.exports = {
+    createWindow, 
+    settingWindow
+};
