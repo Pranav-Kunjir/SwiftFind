@@ -16,9 +16,9 @@ const settingWindow = () =>{
             nodeIntegration: true
         }
     })
-    settingWin.loadFile('./src/templates/index.html')
+    settingWin.loadFile('./src/templates/setting.html')
     settingWin.on("close", ()=>{
-        settingWin = null
+        settingWin = null;
     })
 }
 
@@ -37,7 +37,7 @@ const createWindow = () => {
     win.isAlwaysOnTop(true,"screen-saver")
     win.loadFile('./src/templates/index.html')
     win.on("close", ()=>{
-        win = null
+        win = null;
     })
 
 }
@@ -63,8 +63,15 @@ app.whenReady().then(() =>{
         }
     })
     ipcMain.on("prompt", (event, data) =>{
-        handlePrompt(data)
+        if(data.includes("/help")){
+            settingWindow()
+        }else{
+            handlePrompt(data)
+        }
         win.hide()
+    });
+    ipcMain.on("change_llm", (event,data)=>{
+        console.log(data)
     })
     
 })
