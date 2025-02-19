@@ -1,12 +1,17 @@
-const {app, BrowserWindow, globalShortcut, ipcMain}  = require('electron/main');
+const {app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu}  = require('electron/main');
 const { stat } = require('node:fs');
 const path = require('node:path');
 const { PassThrough } = require('node:stream');
-const {handlePrompt} = require("./modules/handler")
+const {handlePrompt} = require("./modules/handler");
+const { nativeImage, MenuItem } = require('electron');
+const { type } = require('node:os');
+const { run } = require('node:test');
+
 
 let win = null;
 let settingWin = null;
-
+let tray;
+let runOnStartUp = false;
 const settingWindow = () =>{
     settingWin = new BrowserWindow({
         width: 800,
@@ -42,7 +47,32 @@ const createWindow = () => {
 
 }
 
+function autoStartApp(runOnStartUp){
+    if (runOnStartUp){
+        // electron.app.setLoginItemSettings({
+        //     openAtLogin: arg.settings.startOnStartup,
+        //     path: electron.app.getPath("exe")
+        // });
+        console.log("working on that ")
+    }
+}
+const systemTray = () =>{
+    const icon = nativeImage.createFromPath("./src/img/icon.png")
+    tray = new Tray(icon)
+    tray.setToolTip('Swift-Find')
+    tray.setTitle('my tytle')
+    const contextMenu = Menu.buildFromTemplate([
+        { label: 'Setting', click:() =>{settingWindow()}},
+        { label: 'Quit', role:"quit" },
+        { label: 'Run on Start Up',type:'checkbox',checked:runOnStartUp,click:(menuItem) =>{runOnStartUp = menuItem.checked;autoStartApp(runOnStartUp)}}
+    ]);
+    tray.setContextMenu(contextMenu)
+}
+
+
 app.whenReady().then(() =>{
+    autoStartApp()
+    systemTray()
     createWindow()
     win.hide()
     globalShortcut.register("Control+Space", () => {
