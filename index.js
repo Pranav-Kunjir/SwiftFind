@@ -3,6 +3,7 @@ const { stat } = require('node:fs');
 const path = require('node:path');
 const { PassThrough } = require('node:stream');
 const {handlePrompt} = require("./modules/handler");
+const {readSettings, returnUrl} = require("./modules/access_files")
 const { nativeImage, MenuItem } = require('electron');
 const { type } = require('node:os');
 const { run } = require('node:test');
@@ -12,6 +13,11 @@ let win = null;
 let settingWin = null;
 let tray;
 let runOnStartUp = false;
+let default_llm,llm_url;
+
+console.log(default_llm,llm_url)
+
+
 const settingWindow = () =>{
     settingWin = new BrowserWindow({
         width: 800,
@@ -95,8 +101,19 @@ app.whenReady().then(() =>{
     ipcMain.on("prompt", (event, data) =>{
         if(data.includes("/help")){
             settingWindow()
-        }else{
-            handlePrompt(data)
+            readSettings("./src/setting.json")
+        }else{                      
+            readSettings("./src/setting.json")
+            .then(value => {
+                default_llm = value;
+                return returnUrl("./src/llm_source.json",default_llm); // Return this promise
+            })
+            .then(value => {
+                llm_url = value;
+                handlePrompt(data,llm_url)
+            })
+            .catch(err => console.log(err));
+
         }
         win.hide()
     });

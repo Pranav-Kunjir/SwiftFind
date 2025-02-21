@@ -1,9 +1,3 @@
 {
-    "default_llm": "chat_gpt",
-    "default_search_engine":"google",
-    "all_llms":{
-        "chat_gpt":"https://chatgpt.com/?q=",
-        "claude":"https://claude.ai/new?q=%s",
-        "perplexity":"https://www.perplexity.ai/search?q=%s"
-        }
+    "default_llm": "chat_gpt"
 }
