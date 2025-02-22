@@ -9,14 +9,21 @@
 </head>
 <body>
     <div class="container mx-auto px-4">
-        <h2>Setting</h2>
-        <select name="llm" id="llm">
-            <option value="chatgpt">Chat GPT</option>
-            <option value="claude">Claude</option>
-            <option value="perplexity">Perplexity</option>
-            <option value="deepseek">Deepseek(not working right now)</option>
-            <option value="t3chat">T3 chat</option>
-        </select>
+        <h2 class="text-center">Setting</h2>
+        <div class="container mx-auto text-center ">
+            <div class="flex justify-around mt-10 ">
+                <h3 id="current_llm">Select the default llm</h3>
+                <select name="llm" id="llm">
+                </select>
+            </div>
+            <div class="flex justify-around mt-10 ">
+                <h3 id="current_llm">theme</h3>
+                <select name="theme" id="theme">
+                    <option value="Light">Light</option>
+                    <option value="Dark">Dark</option>
+                </select>
+            </div>
+        </div>
           
     </div>
 </body>

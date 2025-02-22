@@ -1,5 +1,5 @@
 {
-    "chat_gpt":"https://chatgpt.com/?q=",
+    "chatgpt":"https://chatgpt.com/?q=",
     "claude":"https://claude.ai/new?q=%s",
     "perplexity":"https://www.perplexity.ai/search?q=%s"
 }

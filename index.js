@@ -3,7 +3,7 @@ const { stat } = require('node:fs');
 const path = require('node:path');
 const { PassThrough } = require('node:stream');
 const {handlePrompt} = require("./modules/handler");
-const {readSettings, returnUrl} = require("./modules/access_files")
+const {readSettings, returnUrl, change_llm} = require("./modules/access_files")
 const { nativeImage, MenuItem } = require('electron');
 const { type } = require('node:os');
 const { run } = require('node:test');
@@ -14,9 +14,6 @@ let settingWin = null;
 let tray;
 let runOnStartUp = false;
 let default_llm,llm_url;
-
-console.log(default_llm,llm_url)
-
 
 const settingWindow = () =>{
     settingWin = new BrowserWindow({
@@ -118,7 +115,8 @@ app.whenReady().then(() =>{
         win.hide()
     });
     ipcMain.on("change_llm", (event,data)=>{
-        console.log(data)
+        change_llm("./src/setting.json",data)
+
     })
     
 })

@@ -46,7 +46,24 @@ function returnUrl(path,llm){
   })
 }
 
+function change_llm(path,llm){
+    jsonfile.readFile(path, (err,data) =>{
+
+      try{
+        data.default_llm = llm
+        jsonfile.writeFile(path, data, { spaces: 4 }, (err) => {
+          if (err) {
+              console.error("Error writing file:", err);
+          } 
+        });
+      }catch(error){
+        console.log(error)
+      }
+    })
+  }
+
 module.exports = {
     readSettings,
-    returnUrl
+    returnUrl,
+    change_llm
 }

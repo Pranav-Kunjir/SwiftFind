@@ -14,6 +14,21 @@ if (window.location.pathname.includes("index.html")){
     console.log("prompt skipped not found")
 }
 if(window.location.pathname.includes("setting.html")){
+    try{
+        fetch("./../llm_source.json")
+        .then(response => response.json())
+        .then(jsonData => {
+            for (let key in jsonData) {
+                console.log(key, jsonData[key]);
+                const option = document.createElement("option")
+                option.value = key;
+                option.textContent = key;
+                change_llm.appendChild(option);
+            }
+        })
+    }catch(error){
+        console.log(error)
+    }
     change_llm.addEventListener("change", (e)=>{
         let new_llm = e.target.value;
         window.electron.change_llm_request(new_llm);

@@ -19,8 +19,9 @@ const {shell} = require("electron")
 
 function handlePrompt(prompt, url){
     shell.openExternal(`${url}${prompt}`)
-    console.log(`${url}${prompt}`)
 }
+
+
 
 module.exports = {
     handlePrompt
