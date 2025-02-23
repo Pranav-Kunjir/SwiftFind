@@ -61,9 +61,25 @@ function change_llm(path,llm){
       }
     })
   }
+  function change_theme(path,theme){
+    jsonfile.readFile(path, (err,data) =>{
+
+      try{
+        data.theme = theme
+        jsonfile.writeFile(path, data, { spaces: 4 }, (err) => {
+          if (err) {
+              console.error("Error writing file:", err);
+          } 
+        });
+      }catch(error){
+        console.log(error)
+      }
+    })
+  }
 
 module.exports = {
     readSettings,
     returnUrl,
-    change_llm
+    change_llm,
+    change_theme
 }

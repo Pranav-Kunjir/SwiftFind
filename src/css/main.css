@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+.margin-top{
+    margin-top: 5vh;
+}
+
+.dark{
+    background-color: #2e3440;
+    color: #d8dee9;
+}

@@ -3,7 +3,7 @@ const { stat } = require('node:fs');
 const path = require('node:path');
 const { PassThrough } = require('node:stream');
 const {handlePrompt} = require("./modules/handler");
-const {readSettings, returnUrl, change_llm} = require("./modules/access_files")
+const {readSettings, returnUrl, change_llm , change_theme} = require("./modules/access_files")
 const { nativeImage, MenuItem } = require('electron');
 const { type } = require('node:os');
 const { run } = require('node:test');
@@ -116,6 +116,10 @@ app.whenReady().then(() =>{
     });
     ipcMain.on("change_llm", (event,data)=>{
         change_llm("./src/setting.json",data)
+
+    })
+    ipcMain.on("change_theme", (event,data)=>{
+        change_theme("./src/setting.json",data)
 
     })
     
