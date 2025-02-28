@@ -1,24 +1,31 @@
 const {shell} = require("electron")
+const {bangs} = require("./bangs.js")
 
 
-// function searchgoogle(prompt){
-//     let query = prompt.replace("/g","")
-//     shell.openExternal(`https://www.google.com/search?q=${query}`)
-// }
-// function chatgpt(prompt){
-//     shell.openExternal(`https://chatgpt.com/?q=${prompt}`)
-// }
+function getBangURL(prompt) {
+    const match = prompt.match(/^(.*)\s+!(\w+)$|^!(\w+)\s+(.*)$/);
+    if (!match) return null; // Return null if no bang is found
 
-// function handlePrompt(prompt){
-//     if(prompt.includes("/g")){
-//         searchgoogle(prompt)
-//     }else{
-//         chatgpt(prompt)
-//     }
-// }
+    const query = match[1] || match[4]; // Extract search query
+    const bang = match[2] || match[3];  // Extract bang keyword
+
+    if (!query || !bang) return null;
+
+    const foundBang = bangs.find(b => b.t === bang);
+    if (!foundBang) return null;
+
+    return foundBang.u.replace("{{{s}}}", encodeURIComponent(query.trim()));
+}
+
 
 function handlePrompt(prompt, url){
-    shell.openExternal(`${url}${prompt}`)
+    let result = getBangURL(prompt)
+    if (result === null){
+        shell.openExternal(`${url}${prompt}`)
+    }
+    else{
+        shell.openExternal(`${result}`)
+    }
 }
 
 

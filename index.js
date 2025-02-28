@@ -3,7 +3,7 @@ const { stat } = require('node:fs');
 const path = require('node:path');
 const { PassThrough } = require('node:stream');
 const {handlePrompt} = require("./modules/handler");
-const {readSettings, returnUrl, change_llm , change_theme} = require("./modules/access_files")
+const {readSettings, returnUrl, change_llm , change_theme, runOnStartUp} = require("./modules/access_files")
 const { nativeImage, MenuItem } = require('electron');
 const { type } = require('node:os');
 const { run } = require('node:test');
@@ -12,8 +12,14 @@ const { run } = require('node:test');
 let win = null;
 let settingWin = null;
 let tray;
-let runOnStartUp = false;
+let runOnStartUpState
 let default_llm,llm_url;
+
+runOnStartUp("./src/setting.json")
+            .then(value => {
+                runOnStartUpState = value;
+            })
+
 
 const settingWindow = () =>{
     settingWin = new BrowserWindow({
@@ -50,13 +56,16 @@ const createWindow = () => {
 
 }
 
-function autoStartApp(runOnStartUp){
-    if (runOnStartUp){
-        // electron.app.setLoginItemSettings({
-        //     openAtLogin: arg.settings.startOnStartup,
-        //     path: electron.app.getPath("exe")
-        // });
-        console.log("working on that ")
+function autoStartApp(runOnStartUpState){
+    if (runOnStartUpState === true){
+        app.setLoginItemSettings({
+            openAtLogin: true, // Enable autostart
+            path: app.getPath('exe'), // Path to the Electron executable
+          });
+    }else{
+        app.setLoginItemSettings({
+            openAtLogin: false, // Disable autostart
+          });
     }
 }
 const systemTray = () =>{
@@ -74,7 +83,7 @@ const systemTray = () =>{
 
 
 app.whenReady().then(() =>{
-    autoStartApp()
+    autoStartApp(runOnStartUpState)
     systemTray()
     createWindow()
     win.hide()

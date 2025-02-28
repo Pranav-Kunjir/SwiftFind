@@ -6,17 +6,20 @@
   "scripts": {
     "start": "electron .",
     "dev": "nodemon --watch main.js --exec electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^34.1.1",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "electron-prebuilt-compile": "34.1.1"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.6",
     "@tailwindcss/vite": "^4.0.6",
+    "bootstrap": "^5.3.3",
     "jsonfile": "^6.1.0",
     "tailwindcss": "^4.0.6"
   }

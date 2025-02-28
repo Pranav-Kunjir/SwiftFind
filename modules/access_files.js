@@ -77,9 +77,23 @@ function change_llm(path,llm){
     })
   }
 
+
+  function runOnStartUp(path){
+    return new Promise((resolve,reject) =>{
+      jsonfile.readFile(path, (err,data) =>{
+        if (err) {
+          reject(err)
+        }else{
+          resolve(data.runOnStartUp);
+        }
+      })
+    })
+  }
+
 module.exports = {
     readSettings,
     returnUrl,
     change_llm,
-    change_theme
+    change_theme,
+    runOnStartUp
 }

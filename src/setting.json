@@ -1,4 +1,5 @@
 {
     "default_llm": "chatgpt",
-    "theme": "dark"
+    "theme": "dark",
+    "runOnStartUp": true
 }
