@@ -35,5 +35,14 @@
       "icon": "build/icon.ico"
     }
   },
-  "keywords": []
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pranav-Kunjir/SwiftFind.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Pranav-Kunjir/SwiftFind/issues"
+  },
+  "homepage": "https://github.com/Pranav-Kunjir/SwiftFind#readme"
 }
